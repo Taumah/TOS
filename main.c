@@ -1,12 +1,12 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
+#include "functions.h"
 
-#include "./functions.h"
 
-int main(int argc, char** argv){
+int main(/*int argc, char** argv*/){
     
-    printf("hello world");
+    pixel_t test = {20,20,20};
+
+    img_blue(&test);
+    printf("\nhello world\n");
 
     return 0;
 }
