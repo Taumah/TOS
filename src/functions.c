@@ -1,11 +1,7 @@
 #define POS_DIMENSIONS 3 //magicnumber + whitespace =3
 
-<<<<<<< Updated upstream:functions.c
-#include "functions.h"
-=======
 #include "../headers/functions.h"
 #include "../headers/commons.h"
->>>>>>> Stashed changes:src/functions.c
 
 pixel_t pixel_new(__uint8_t red, __uint8_t green, __uint8_t blue){
     
@@ -123,13 +119,6 @@ ppm_image_t ppm_new(const char *pathname){
     }
 //
 
-<<<<<<< Updated upstream:functions.c
-
-
-
-bool is_whitespace(const char letter){
-    return (strchr("\t\n\v\f\r " , letter) == NULL);
-=======
 bool pixel_equals(const pixel_t* self, const pixel_t* other){
     bool valid = pixel_green(self) == pixel_green(other);
     valid &= pixel_red(self) ==  pixel_red(other);
@@ -146,5 +135,4 @@ pixel_t pixel_invert(const pixel_t* pix){
     copy.blue   =  ~pixel_blue(pix);
 
     return copy;
->>>>>>> Stashed changes:src/functions.c
 }

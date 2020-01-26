@@ -1,5 +1,5 @@
-#include "functions.h"
-
+#include "../headers/functions.h"
+#include "../headers/commons.h"
 
 int main(/*int argc, char** argv*/){
     
