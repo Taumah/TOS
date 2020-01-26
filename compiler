@@ -1,0 +1,3 @@
+gcc-8 -std=c11 -pthread -Werror -Wall -Wextra functions.c main.c -o superpixmanip
+
+./superpixmanip
