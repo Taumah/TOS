@@ -33,12 +33,12 @@ ppm_image_t ppm_new(const char *pathname){
 
     ppm_get_config(pf_picture , config);
 
-//~~~~~~~Filling fields~~~~
-    pic_registered.height = get_ppm_height(config);
-    pic_registered.width  = get_ppm_width(config);
+    //~~~~~~~Filling fields~~~~
+        pic_registered.height = get_ppm_height(config);
+        pic_registered.width  = get_ppm_width(config);
 
-    pic_registered.length = get_ppm_size(pf_picture);
-//
+        pic_registered.length = get_ppm_size(pf_picture);
+    //
 
     fclose(pf_picture);
     free(config);
@@ -68,14 +68,21 @@ ppm_image_t ppm_new(const char *pathname){
     size_t get_ppm_height(const char* config){
         char* file_height;
         size_t height = 0;
+        __uint8_t height_range = 0;
+        char* start = strpbrk(config , "\t\n\v\f\r ")+1;
 
-        file_height = malloc(3);
-        strncpy(file_height , (config+3) , 3);
+        while(is_whitespace(start[height_range] )|| height_range > 12 )
+            height_range++;
 
-
+        
+        file_height = malloc(height_range);
+        strncpy(file_height , start , height_range);
         height = atoi(file_height);
 
+        printf("largeur %hhu , valeur %lu \n" , height_range , height);
+
         free(file_height);
+
         return height;
     }
 
@@ -84,21 +91,31 @@ ppm_image_t ppm_new(const char *pathname){
         size_t width = 0;
         __uint8_t width_range = 0;
 
-        while(strchr("\t\n\v\f\r ", config[POS_DIMENSIONS + width_range]) == NULL )
+        while(strchr("\t\n\v\f\r ", config[POS_DIMENSIONS + width_range]) == NULL || width_range > 12) // 2nd condition to avoid infinite loops
             width_range++;
 
 
-        file_width = malloc(width_range);
-        strncpy(file_width , (config + POS_DIMENSIONS), width_range);
-        width = atoi(file_width);
+        file_width = malloc(width_range * sizeof(char));
+        if(file_width != NULL){
+            strncpy(file_width , (config + POS_DIMENSIONS), width_range);
+            width = atoi(file_width);
 
-        printf("longueur %hhu ,valeur %lu \n" , width_range , width);
+            printf("longueur %hhu ,valeur %lu \n" , width_range , width);
 
-        free(file_width);
-        return width;
+            free(file_width);
+            return width;
+        }
+        else{
+            printf("Erreur lors du calcul des dimensions de l'image");
+            return EXIT_FAILURE;
+        }
+        
     }
 //
 
 
 
 
+bool is_whitespace(const char letter){
+    return (strchr("\t\n\v\f\r " , letter) == NULL);
+}
