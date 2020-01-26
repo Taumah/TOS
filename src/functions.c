@@ -1,6 +1,6 @@
 #define POS_DIMENSIONS 3 //magicnumber + whitespace =3
 
-#include "functions.h"
+#include "../headers/functions.h"
 
 pixel_t pixel_new(__uint8_t red, __uint8_t green, __uint8_t blue){
     
@@ -113,9 +113,3 @@ ppm_image_t ppm_new(const char *pathname){
     }
 //
 
-
-
-
-bool is_whitespace(const char letter){
-    return (strchr("\t\n\v\f\r " , letter) == NULL);
-}
