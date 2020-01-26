@@ -22,7 +22,12 @@
     }ppm_image_t;
 //
 
-ppm_image_t ppm_new(const char *pathname);
+void pixel_print(const pixel_t* p);
+
+//~~~~~~~~"Hydrators"~~~~~~~~~~~
+    ppm_image_t ppm_new(const char *pathname);
+    pixel_t pixel_new(__uint8_t red, __uint8_t green, __uint8_t blue);
+//
 
 //~~~~~get pixel components~~~~~~~~~~~~~~~~~
     __uint8_t pixel_blue(const pixel_t *p);
@@ -30,15 +35,14 @@ ppm_image_t ppm_new(const char *pathname);
     __uint8_t pixel_red(const pixel_t *p);
 //
 
-pixel_t pixel_new(__uint8_t red, __uint8_t green, __uint8_t blue);
 
-bool pixel_equals(const pixel_t *p , const pixel_t *p2);
 //~~~~~~get ppm picture components~~~~~~~~~~~~
     void ppm_get_config(FILE* image_file , char* config);
 
     size_t get_ppm_size(FILE* image_file);
     size_t get_ppm_width(const char* config);
     size_t get_ppm_height(const char* config);
+//
 
-
-bool is_whitespace(const char letter);
+bool pixel_equals(const pixel_t *p , const pixel_t *p2);
+pixel_t pixel_invert(const pixel_t* pix);
