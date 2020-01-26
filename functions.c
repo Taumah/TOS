@@ -1,6 +1,11 @@
 #define POS_DIMENSIONS 3 //magicnumber + whitespace =3
 
+<<<<<<< Updated upstream:functions.c
 #include "functions.h"
+=======
+#include "../headers/functions.h"
+#include "../headers/commons.h"
+>>>>>>> Stashed changes:src/functions.c
 
 pixel_t pixel_new(__uint8_t red, __uint8_t green, __uint8_t blue){
     
@@ -12,6 +17,11 @@ pixel_t pixel_new(__uint8_t red, __uint8_t green, __uint8_t blue){
     
     return new_pixel;
 }
+
+void pixel_print(const pixel_t* p){
+    printf("%hhu %hhu %hhu" , p->red , p->green , p->blue);
+}
+
 
 //~~~~~~~~PIXEL getters~~~~~~~~~~
     __uint8_t pixel_red(const pixel_t *p){
@@ -113,9 +123,28 @@ ppm_image_t ppm_new(const char *pathname){
     }
 //
 
+<<<<<<< Updated upstream:functions.c
 
 
 
 bool is_whitespace(const char letter){
     return (strchr("\t\n\v\f\r " , letter) == NULL);
+=======
+bool pixel_equals(const pixel_t* self, const pixel_t* other){
+    bool valid = pixel_green(self) == pixel_green(other);
+    valid &= pixel_red(self) ==  pixel_red(other);
+    valid &= pixel_blue(self) ==  pixel_blue(other);
+
+    return valid;
+}
+
+pixel_t pixel_invert(const pixel_t* pix){
+    pixel_t copy;
+
+    copy.red    =  ~pixel_red(pix);
+    copy.green  =  ~pixel_green(pix);
+    copy.blue   =  ~pixel_blue(pix);
+
+    return copy;
+>>>>>>> Stashed changes:src/functions.c
 }
