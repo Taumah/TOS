@@ -62,4 +62,4 @@ void ppm_free(ppm_image_t* picture);
 //TO CODE
     void ppm_file_from_pic(const ppm_image_t* origin);
     ppm_image_t ppm_revert(const ppm_image_t* origin);
-    void ppm_copy_attributes(const ppm_image_t* recent ,const ppm_image_t* origin);
+    void ppm_copy_attributes(ppm_image_t* recent ,const ppm_image_t* origin);
