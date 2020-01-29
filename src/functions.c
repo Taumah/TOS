@@ -61,7 +61,11 @@ ppm_image_t ppm_new(const char *pathname){
 
     pic_registered.pixel = (pixel_t*)malloc(pic_registered.height * pic_registered.width*sizeof(pixel_t));
     
+<<<<<<< HEAD
     get_ppm_pixelArray(&pic_registered , pf_picture);
+=======
+
+>>>>>>> f4d5b15b7d48ca9a2e955759695e217717bd5c6d
     fclose(pf_picture);
     return pic_registered;
 
@@ -135,7 +139,10 @@ ppm_image_t ppm_new(const char *pathname){
     }
 
     void get_ppm_pixelArray(const ppm_image_t* pic , FILE* pfile ){
+<<<<<<< HEAD
         __uint8_t constructor[3];
+=======
+>>>>>>> f4d5b15b7d48ca9a2e955759695e217717bd5c6d
         if( !pic->height || !pic->width || !pic->length){
             printf("field missing");
             exit(1);
@@ -144,10 +151,16 @@ ppm_image_t ppm_new(const char *pathname){
         fseek(pfile , pic->start_pos * sizeof(__uint8_t) , SEEK_SET);
         size_t i , j;
         for(i = 0 ; i < pic->height ; i++){
+<<<<<<< HEAD
             for (j = 0; j < pic->width; j++){
 
                 fread(&constructor , sizeof(__uint8_t) , 3 , pfile);
                 pic->pixel[i * pic->width + j ] = pixel_new(constructor[0] , constructor[1] , constructor[2]);
+=======
+            for (j = 0; i < pic->width; j++){
+                pic->pixel[i * pic->width + j] = pixel_new(0,0,0);
+                pixel_print(&pic->pixel[i * pic->width + j]);   
+>>>>>>> f4d5b15b7d48ca9a2e955759695e217717bd5c6d
             }
             
         }
