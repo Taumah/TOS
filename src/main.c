@@ -3,18 +3,22 @@
 
 int main(/*int argc, char** argv*/){
     
-    ppm_image_t picture = ppm_new("ppm.ppm");
+    ppm_image_t picture = ppm_new("small.ppm");
 
-    pixel_t test = {20, 30 ,40};
-    pixel_t test2;
+    // pixel_t test = {20, 30 ,40};
 
-    printf("%lu   %lu\n" , picture.width , picture.height);
+    // printf("\n\n\n\n\n");
+    // ppm_print(&picture);
+    // printf("\n\n\n\n\n");
+    char text[100];
 
-    test2 = pixel_invert(&test);
+    FILE* pf = fopen("small.ppm" , "rb");
 
+    fread(text , sizeof(char) , 90 , pf );
 
-    pixel_print(&test2);
+    printf("%s" , text);
 
+    ppm_free(&picture);
     return 0;
 
 
