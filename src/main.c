@@ -11,8 +11,16 @@ int main(/*int argc, char** argv*/){
 
     printf("\n\n\n\n");
 
+
     ppm_print(&copy);
+
+
+    ppm_file_from_pic(&picture);
+
+
     ppm_free(&picture);
+    ppm_free(&copy);
+
     return 0;
 
 

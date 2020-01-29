@@ -50,6 +50,8 @@ void ppm_print(const ppm_image_t *pic);
     size_t get_ppm_width(const char* config);
     size_t get_ppm_height(const char* config);
     __uint8_t get_ppm_start(const char* config);
+
+    pixel_t ppm_get_pixel_at(const ppm_image_t *img, const size_t x, const size_t y);
 //
 
 bool pixel_equals(const pixel_t *p , const pixel_t *p2);
