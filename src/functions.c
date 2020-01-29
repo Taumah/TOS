@@ -48,7 +48,7 @@ ppm_image_t ppm_new(const char *pathname){
     ppm_image_t pic_registered;
 
     FILE* pf_picture = fopen(pathname , "rb");
-    char* config = malloc(50*sizeof(char));
+    char config[30] = "";
     ppm_get_config(pf_picture , config);
 
     //~~~~~~~Filling fields~~~~
@@ -61,21 +61,7 @@ ppm_image_t ppm_new(const char *pathname){
 
     pic_registered.pixel = (pixel_t**)malloc(pic_registered.height);
 
-    for(__uint8_t i = 0 ; i < pic_registered.height ; i++){
-        pic_registered.pixel[i] = (pixel_t*)malloc(pic_registered.width);
-        
-        for(__uint8_t j = 0 ; j < pic_registered.width ; j++){
-            pic_registered.pixel[i][j].red = 0;
-            pic_registered.pixel[i][j].green = 0; 
-            pic_registered.pixel[i][j].blue = 0;
-        }
-    }
-
-    // get_ppm_pixelArray(&pic_registered , pf_picture );
-
     fclose(pf_picture);
-    free(config);
-
     return pic_registered;
 
 }
@@ -100,28 +86,25 @@ ppm_image_t ppm_new(const char *pathname){
     }
 
     size_t get_ppm_height(const char* config){
-        char* file_height;
+        char file_height[8] = "";
         size_t height = 0;
         __uint8_t height_range = 0;
         char* start = strpbrk(config+ POS_DIMENSIONS , "\t\n\v\f\r ")+1;
 
-        while(is_whitespace(start[height_range] )|| height_range > 12 )
+        while(is_whitespace(start[height_range] )|| height_range > 8 )
             height_range++;
 
         
-        file_height = malloc(height_range);
         strncpy(file_height , start , height_range);
         height = atoi(file_height);
 
         printf("largeur %hhu , valeur %lu \n" , height_range , height);
 
-        free(file_height);
-
         return height;
     }
 
     size_t get_ppm_width(const char* config){
-        char* file_width;
+        char file_width[8] = "";
         size_t width = 0;
         __uint8_t width_range = 0;
 
@@ -129,20 +112,12 @@ ppm_image_t ppm_new(const char *pathname){
             width_range++;
 
 
-        file_width = malloc(width_range * sizeof(char));
-        if(file_width != NULL){
-            strncpy(file_width , (config + POS_DIMENSIONS), width_range);
-            width = atoi(file_width);
+        strncpy(file_width , (config + POS_DIMENSIONS), width_range);
+        width = atoi(file_width);
 
-            printf("longueur %hhu ,valeur %lu \n" , width_range , width);
+        printf("longueur %hhu ,valeur %lu \n" , width_range , width);
 
-            free(file_width);
-            return width;
-        }
-        else{
-            printf("Erreur lors du calcul des dimensions de l'image");
-            return EXIT_FAILURE;
-        }
+        return width;
         
     }
 
@@ -198,11 +173,11 @@ pixel_t pixel_invert(const pixel_t* pix){
 
 void ppm_free(ppm_image_t* picture){
     
-    for(long i = (long)picture->height-1 ; i >= 0 ; i--){
+    /* for(long i = (long)picture->height-1 ; i >= 0 ; i--){
         printf("%lu \n %hhu %hhu %hhu \n" ,i, picture->pixel[i]->red , picture->pixel[i]->green , picture->pixel[i]->blue );
         free(picture->pixel[i]);
-/*         printf("%lu" , i);
- */    }
+        printf("%lu" , i);
+     } */
 
     free(picture->pixel);
 }
