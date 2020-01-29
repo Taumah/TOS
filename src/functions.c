@@ -24,7 +24,7 @@ pixel_t pixel_new(__uint8_t red, __uint8_t green, __uint8_t blue){
 
         for(size_t i =0 ; i < pic->height ; i++){
             for(size_t j =0 ; j < pic->width ; j++){
-                pixel_print(&pic->pixel[i][j]);
+                pixel_print(&pic->pixel[i * pic->width + j]);
                 printf("\t");
             }
             printf("\n");
@@ -59,7 +59,8 @@ ppm_image_t ppm_new(const char *pathname){
         pic_registered.length = get_ppm_size(pf_picture);
     //
 
-    pic_registered.pixel = (pixel_t**)malloc(pic_registered.height);
+    pic_registered.pixel = (pixel_t*)malloc(pic_registered.height * pic_registered.width*sizeof(pixel_t));
+    
 
     fclose(pf_picture);
     return pic_registered;
@@ -143,8 +144,8 @@ ppm_image_t ppm_new(const char *pathname){
         size_t i , j;
         for(i = 0 ; i < pic->height ; i++){
             for (j = 0; i < pic->width; j++){
-                pic->pixel[i][j] = pixel_new(0,0,0);
-                pixel_print(&pic->pixel[i][j]);   
+                pic->pixel[i * pic->width + j] = pixel_new(0,0,0);
+                pixel_print(&pic->pixel[i * pic->width + j]);   
             }
             
         }
@@ -172,12 +173,5 @@ pixel_t pixel_invert(const pixel_t* pix){
 }
 
 void ppm_free(ppm_image_t* picture){
-    
-    /* for(long i = (long)picture->height-1 ; i >= 0 ; i--){
-        printf("%lu \n %hhu %hhu %hhu \n" ,i, picture->pixel[i]->red , picture->pixel[i]->green , picture->pixel[i]->blue );
-        free(picture->pixel[i]);
-        printf("%lu" , i);
-     } */
-
     free(picture->pixel);
 }

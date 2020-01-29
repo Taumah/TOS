@@ -7,6 +7,7 @@ int main(/*int argc, char** argv*/){
 
     // pixel_t test = {20, 30 ,40};
 
+    ppm_print(&picture);
     ppm_free(&picture);
     return 0;
 

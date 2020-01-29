@@ -19,7 +19,7 @@
 
         __uint8_t start_pos;
         
-        pixel_t** pixel;
+        pixel_t* pixel;
 
     }ppm_image_t;
 //

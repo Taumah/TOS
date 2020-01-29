@@ -4,7 +4,7 @@ gcc-8 -std=c11 -pthread -Werror -Wall -Wextra src/*.c -o bin/superpixmanip
 
 
 if [ "$type" = "valg" ]; then
-    ./bin/superpixmanip
-else
     valgrind --leak-check=yes ./bin/superpixmanip
+else
+    ./bin/superpixmanip
 fi
