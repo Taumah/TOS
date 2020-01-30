@@ -17,7 +17,7 @@ pixel_t pixel_new(__uint8_t red, __uint8_t green, __uint8_t blue){
 }
 //~~~~~~~~Structs printers~~~~~~~~~~~~~
     void pixel_print(const pixel_t* p){
-        printf("%hhu  %hhu  %hhu " , p->red , p->green , p->blue);
+        printf("%hhu %hhu %hhu \t" , p->red , p->green , p->blue);
     }
 
     void ppm_print(const ppm_image_t  *pic){
@@ -25,7 +25,6 @@ pixel_t pixel_new(__uint8_t red, __uint8_t green, __uint8_t blue){
         for(size_t i =0 ; i < pic->height ; i++){
             for(size_t j =0 ; j < pic->width ; j++){
                 pixel_print(&pic->pixel[i * pic->width + j]);
-                printf("\t");
             }
             printf("\n");
         }
@@ -99,8 +98,6 @@ ppm_image_t ppm_new(const char *pathname){
         strncpy(file_height , start , height_range);
         height = atoi(file_height);
 
-        printf("largeur %hhu , valeur %lu \n" , height_range , height);
-
         return height;
     }
 
@@ -115,8 +112,6 @@ ppm_image_t ppm_new(const char *pathname){
 
         strncpy(file_width , (config + POS_DIMENSIONS), width_range);
         width = atoi(file_width);
-
-        printf("longueur %hhu ,valeur %lu \n" , width_range , width);
 
         return width;
         
@@ -208,12 +203,12 @@ void ppm_copy_attributes(ppm_image_t* recent ,const ppm_image_t* origin){
 }
 
 
-void ppm_file_from_pic(const ppm_image_t* origin){
-    FILE* new_file = fopen("copy.ppm" , "wb");
+void ppm_file_from_pic(const ppm_image_t* origin , const char* filepath){
+    FILE* new_file = fopen(filepath , "wb");
     pixel_t pixel_tmp = {0,0,0};
     char config[30];
 
-    sprintf(config , "P6\n%lu %lu\n255\n", origin->height , origin->width);
+    sprintf(config , "P6\n%lu %lu\n255\n", origin->width , origin->height);
 
     fwrite(config , sizeof(char) , strlen(config) , new_file );
 
@@ -231,5 +226,29 @@ void ppm_file_from_pic(const ppm_image_t* origin){
 
 pixel_t ppm_get_pixel_at(const ppm_image_t *img, const size_t x, const size_t y){
 
-    return img->pixel[x + y* img->width];
+    size_t i = x + y* img->width;
+    pixel_print(&img->pixel[i]);
+
+    printf("\n i vaut %p %lu\n" , &img->pixel[i] , i );
+    return img->pixel[i];
+}
+
+bool is_pixel_black(const pixel_t *p){
+    bool result = true;
+
+    result &= !pixel_blue(p);
+    result &= !pixel_green(p);
+    result &= !pixel_red(p);
+
+    return result;
+}
+
+size_t ppm_black_counter(const ppm_image_t *img){
+    size_t counter = 0;
+    for( size_t row = 0 ; row <  img->height ; row++){
+        for( size_t col = 0 ; col < img->width ; col++){
+            counter += is_pixel_black(&img->pixel[row* img->width + col]);
+        }
+    }
+    return counter;
 }

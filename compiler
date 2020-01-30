@@ -1,10 +1,12 @@
 type=$1
 
-gcc-8 -std=c11 -pthread -Werror -Wall -Wextra src/*.c -o bin/superpixmanip
+gcc-8 -std=c11 -pthread -Werror -Wall -Wextra src/*.c -o bin/superpixmanip -g
 
 
 if [ "$type" = "valg" ]; then
     valgrind --leak-check=yes ./bin/superpixmanip
+elif [ "$type" = "track" ]; then 
+    valgrind --leak-check=yes --track-origins=yes ./bin/superpixmanip
 else
     ./bin/superpixmanip
 fi
