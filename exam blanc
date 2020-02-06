@@ -1,0 +1,80 @@
+1 - fonction C qui prépare des arguments et fais un appel avec syscall vers le kernel
+
+2 - Si le process a tous les droits, il pourrait tuer d'autre processus, allouer toute la memoire pour lui. Il n'a donc pas acces a tous les droits. Il ne peut pas lui meme mettre qq chose ds le processus d'interruption. 
+
+3 - 7 grandes étapes d'un appel système : 
+	1°) Rentre dans le kernel
+	2°) Mode privilegié
+	3°) Sauvegarde les registres
+	4°) Traitement appel système
+	5°) Restaure les registres
+	6°) Sortir mode privilégié
+	7°) Sorti du kernel
+
+4 - Existe-il des fichiers qui soient en fait une API pour discuter avec le kernel ? Oui justifier.
+
+Oui -> les informations de mon cpu
+
+5 - Qu’est-ce qu’une interruption ?
+
+quand on tape sur le clavier -> interruption qui vient réveler le kernel -> application gère la suite
+
+6 - Succinctement : C’est quoi la mémoire physique ? La mémoire dynamique ?
+
+Mem physique : RAM. Ce qu'il y a dans la puce
+
+Mem dynamique/virtuel : systeme de page pour faire croire aux process qu'ils sont tout seul
+
+7 - A quoi sert la pile/stack ?
+
+pile : variables locales dans les fonctions
+
+8 - Est-ce que tout les fichiers existent sur le disque ou certains sont des abstractions ?
+
+certains fichiers sont jutes en mémoire.
+
+9 - C’est quoi un processus ?
+
+pid instruction espace mémoire
+
+10 - a quoi sert un fork ?
+
+11 - Que fait un programme pendant un appel système synchrone
+
+attente systeme il est au bahamas
+
+12 - A quoi sert l'horloge dans votre CPU comment l'OS l'utilisent et pourquoi
+
+sert a partager les tâches. cherche les taches a faire.
+
+13 - C’est quoi un thread quelle mémoire possède t-il ? Dans quel espace est-elle sous linux.
+
+c'est un fil d'éxecution 
+
+14 - Quelles sont les grandes régles à respecter pour communiquer par mémoire partagée ?
+Donnez un cas problèmatique si on ne respecte pas ces régles.
+
+Synchroniser ses acces, vérous. Partager sans vraiment partager.
+Eviter d'avoir acces en meme temps a la mémoire au meme endroit au meme moment.
+ne pas partager en meme temps en lecture/ecriture.
+
+
+15 - Quels appels doit ont faire pour qu’un serveur sous unix/Linux/Mac puisse recevoir
+des messages, avec des Sockets.
+
+pour accepter une connexion
+
+Sockets
+bind : connection structure en c du socket et port du socket
+listen - attend un connection
+accepter une connection
+lire / ecrire un message
+
+16 - Que dois-je connaître sur un réseau IP (on ignore les noms de domaines) pour commu-
+niquer entre ordinateurs ?
+
+
+
+17 - quel pb résoud gestion des entrées asynchrone citez un lagage
+
+JS de c mor
