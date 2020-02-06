@@ -2,8 +2,15 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
+#include <pthread.h>
+#include <stdint.h>
 
+
+// #include <assert.h>
 // #include <ctype.h>
+
+//"main"
+void* run(void*);
 
 //~~~~~~~~structures~~~~~~~~~~~~
     typedef struct pixel_t{
@@ -26,6 +33,26 @@
 
     }ppm_image_t;
 //
+
+
+//LOCKS AND MUTEX
+    typedef struct _shared_counter_t {
+        int32_t counter;
+    } shared_counter_t;
+
+    shared_counter_t * shared_counter_new(void);
+    pthread_mutex_t lock;
+    void shared_counter_drop(shared_counter_t * sc);
+    void shared_counter_increment(shared_counter_t * shared_counter);
+    int32_t shared_counter_value(const shared_counter_t * sc);
+
+    typedef struct _thread_data_t {
+        int32_t thread_id;
+        shared_counter_t * shared_counter;
+    } thread_data_t;
+//
+
+
 
 //~~~~~~~~~Printers~~~~~~~~~~~
     //one line printf of `pix` fields
@@ -62,7 +89,11 @@
 
     bool is_pixel_black(const pixel_t *p);
 
+    //counts black pixels from img
     size_t ppm_black_counter(const ppm_image_t *img);
+    //counts black pixels from img (using multithreading)
+    void ppm_black_counter_with_multithread(const ppm_image_t *img ,thread_data_t* thread_nbr);
+
 
 //
 
@@ -102,3 +133,4 @@ void ppm_file_from_pic(const ppm_image_t* origin , const char* filepath);
 
 //copy all fields (pixelArray excluded) from origin to recent
 void ppm_copy_attributes(ppm_image_t* recent ,const ppm_image_t* origin);
+

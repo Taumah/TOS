@@ -252,3 +252,43 @@ size_t ppm_black_counter(const ppm_image_t *img){
     }
     return counter;
 }
+
+void ppm_black_counter_with_multithread(const ppm_image_t *img ,thread_data_t* thread_nbr){
+
+    size_t begin = 0 , end = 0 ;
+
+    if(thread_nbr->thread_id == 0){ 
+        end = img->height*img->width/2 ;
+
+    } 
+    else{
+        begin = img->height*img->width/2;
+        end = img->height*img->width;
+    }
+
+    for(size_t pos = begin ; pos < end ; pos++){
+        if(is_pixel_black(&img->pixel[pos])){
+            shared_counter_increment(thread_nbr->shared_counter);
+        }
+    }
+}
+
+
+shared_counter_t * shared_counter_new(void) {
+    shared_counter_t * sc = malloc(sizeof(shared_counter_t));
+    sc->counter = 0;
+    return sc;
+}
+
+void shared_counter_drop(shared_counter_t * sc) {
+    free(sc);
+}
+
+void shared_counter_increment(shared_counter_t * sc) {
+    sc->counter += 1;
+}
+
+int shared_counter_value(const shared_counter_t * sc) {
+    return sc->counter;
+}
+
