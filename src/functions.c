@@ -216,7 +216,7 @@ void ppm_file_from_pic(const ppm_image_t* origin , const char* filepath){
 
         for(size_t j = 0 ; j < origin->width ; j++){
             //recuperer pixel du tableau , (3x byte) --> ecrire 3 bytes dans fichier
-            pixel_tmp = ppm_get_pixel_at(origin , i , j);
+            pixel_tmp = ppm_get_pixel_at(origin , j , i);
             fwrite(&pixel_tmp , sizeof(__uint8_t) , 3 , new_file);
         }
     }
